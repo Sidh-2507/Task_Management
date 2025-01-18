@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ag_qo_!hi1b9vewd_+6yq3$8(=oza1w^9vr%7hgwfs2ii4f-d_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Load DEBUG from environment variables (default to False)
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+# Allow Render's domain and localhost
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Application definition
 
@@ -59,10 +60,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+
+'''CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # React frontend URL
 ]
-
+'''
 
 TEMPLATES = [
     {
@@ -89,11 +92,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task_management',
-        'USER': 'task_user1',
-        'PASSWORD': 'securepassword',
-        'HOST': 'localhost',  # Adjust if using a remote database
-        'PORT': '5432',       # Default PostgreSQL port
+        'NAME': os.environ.get('DB_NAME', 'task_management'),
+        'USER': os.environ.get('DB_USER', 'task_user1'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'securepassword'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -142,8 +145,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = '/static/'  # URL to access static files
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Where your app-specific static files are located
 
-STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
