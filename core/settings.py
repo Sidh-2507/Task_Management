@@ -100,13 +100,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'task_management'),
-        'USER': os.environ.get('DB_USER', 'task_user1'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'securepassword'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': 'task_management',  # Database name
+        'USER': 'task_user1',  # Database username
+        'PASSWORD': 'Sidh2507',  # Database password (replace with actual password)
+        'HOST': 'localhost',  # Database host (or use the Render host)
+        'PORT': '5432',  # Default PostgreSQL port
     }
 }
+
 
 from datetime import timedelta
 
