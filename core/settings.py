@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-ag_qo_!hi1b9vewd_+6yq3$8(=oza1w^9vr%7hgwfs2ii4f-d_
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Allow Render's domain and localhost
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['task-management-ixck.onrender.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
