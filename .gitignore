@@ -1,0 +1,12 @@
+# Ignore the .env file that contains sensitive information
+.env
+
+# Ignore the virtual environment directory
+.venv/
+
+# Ignore database files (if you're using SQLite locally)
+
+
+# Ignore pycache files
+__pycache__/
+*.pyc

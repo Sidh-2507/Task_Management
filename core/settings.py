@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import os
+
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,7 +65,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 # CORS settings
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000').split(',')
 
 '''CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # React frontend URL
@@ -98,6 +103,17 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
+}
+
+from datetime import timedelta
+
+# Simple JWT configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Time limit for access tokens
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Time limit for refresh tokens
+    'ROTATE_REFRESH_TOKENS': False,  # Whether to rotate refresh tokens (False means the refresh token stays the same until expired)
+    'BLACKLIST_AFTER_ROTATION': True,  # Whether to blacklist the old refresh token after rotating
+    'SIGNING_KEY': os.environ.get('JWT_SECRET_KEY'),  # Use JWT secret key from .env file
 }
 
 REST_FRAMEWORK = {
